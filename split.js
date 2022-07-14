@@ -1,3 +1,4 @@
+/*
 let palabras = new String("esta es una frase larga de ocho palabras")
 let array = palabras.split(' ')
 mostrarpalabras(array)
@@ -11,7 +12,7 @@ function mostrarpalabras(array){
     console.log(array.sort().reverse())
 }
 
-/*
+
 
 1. Leer una cadena de texto pasada por parámetros a una función
     - generar un array con la función split().
