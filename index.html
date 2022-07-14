@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tarea Kanban App</title>
+    <link rel="icon" type="image/png" href="trello.png" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.0/font/bootstrap-icons.css">
@@ -27,23 +28,60 @@
     </div>
   </header>
 
-  <div class="container px-4 py-5" id="featured-3">
-    <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
-      <div class="feature col bg-light">
-        <h2>Por hacer</h2>
+  
+  <div class="b-example-divider mt-5"></div>
+
+  <div class="container">
+
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+
+      <div class="col">
+        <div class="card shadow-sm">
+          <div class="card-body min-vh-100 bg-secondary text-white">
+            <h2>Por hacer</h2>
         <div class="container-tasks" id="todoTasks"></div>
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="btn-group">
+                <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="feature col bg-light">
-        <h2>En Progreso</h2>
+
+      <div class="col">
+        <div class="card shadow-sm">
+          <div class="card-body min-vh-100 bg-secondary text-white">
+            <h2>En Progreso</h2>
         <div class="container-tasks" id="progressTasks"></div>
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="btn-group">
+                <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="feature col bg-light">
-        <h2>Finalizadas</h2>
+
+      <div class="col">
+        <div class="card shadow-sm">
+          <div class="card-body min-vh-100 bg-secondary text-white">
+            <h2>Finalizadas</h2>
         <div class="container-tasks" id="doneTasks"></div>
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="btn-group">
+                <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
+     
     </div>
   </div>
-
   
   <!-- Modal -->
   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -55,14 +93,12 @@
         </div>
         <div class="modal-body">
             <form class="form-new-task" id="formNewTask">
-                <div class="row-form">
-                    <label for="titleTask" class="form-new-task__label">Título:</label>
-                    <input id="titleTask" name="titleTask" type="text" class="form-new-task__input" placeholder="">
-                </div>
+                  <label for="titleTask" class="form-label">Título</label>
+                  <input type="email" id="titleTask" name="titleTask" class="form-control" id="floatingInput" placeholder="Escriba el título de la nueva tarea">
                 <div class="row-form">
                     <label for="responsibleTask" class="form-new-task__label">Responsable:</label>
-                    <select name="responsibleTask" id="responsibleTask">
-                        <option value="">--seleccionar--</option>
+                    <select name="responsibleTask" id="responsibleTask" class="form-select">
+                        <option value="">Seleccionar</option>
                         <option value="user01">User01</option>
                         <option value="user02">User02</option>
                     </select>
@@ -70,27 +106,20 @@
 
                 <div class="row-form">
                     <label for="deadlineTask" class="form-new-task__label">Plazo Entrega:</label>
-                    <select name="responsibleTask" id="responsibletask">
-                        <option value="">--seleccionar--</option>
+                    <select name="responsibleTask" id="responsibletask" class="form-select">
+                        <option value="">Seleccionar</option>
                         <option value="oneDay">1 día</option>
                         <option value="twoDay">2 días</option>
                         <option value="sevenDays">1 semana</option>
                     </select>
 
-                </div>
-
-                <div class="row-form">
-                    <div class="form-new-task__buttons">
-                        <button class="button button-primary" type="submit">Guardar</button>
-                        <button class="button button-secondary ghost" type="submit">Cancelar</button>
-                    </div>
-                </div>
-            </form>
+                </div> 
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-primary">Guardar</button>
         </div>
+      </form>
       </div>
     </div>
   </div>
