@@ -93,9 +93,14 @@
         </div>
         <div class="modal-body">
             <form class="form-new-task" id="formNewTask">
+              <div class="mb-3">
                   <label for="titleTask" class="form-label">Título</label>
                   <input type="email" id="titleTask" name="titleTask" class="form-control" id="floatingInput" placeholder="Escriba el título de la nueva tarea">
-                <div class="row-form">
+                </div>
+                  <div class="mb-3"><label for="exampleFormControlTextarea1" class="form-label">descripción</label>
+                  <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Escriba la descripción de la nueva tarea"></textarea>
+                </div>
+                  <div class="row-form">
                     <label for="responsibleTask" class="form-new-task__label">Responsable:</label>
                     <select name="responsibleTask" id="responsibleTask" class="form-select">
                         <option value="">Seleccionar</option>
