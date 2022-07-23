@@ -6,7 +6,6 @@ const ApiClient = axios.create({
 
 ApiClient.get(`${API_URL}/tasks`)
     .then((res) => mostrarTareas(res.data))
-    .then
     .catch((err) => console.error (err))
 
 const mostrarTareas = (data) => {
@@ -18,9 +17,11 @@ const crearTarea = (tarea) => {
     nuevaTarea.classList.add('card-tarea')
 
     let tituloTarea = document.createElement('h3')
-    nuevaTarea.classList.add('card-tarea')
+    nuevaTarea.classList.add('card-tarea__titulo')
+    nuevaTarea.innerText = tarea.titulo
 
-    let 
-
+    let responsableTarea document.createElement('p')
+    responsableTarea.classList.add('card-tarea__responsable')
+    responsableTarea.innerText = `<p class="card-tarea__responsable">Responsable: ${tarea.persona}</p>`
 }
 
