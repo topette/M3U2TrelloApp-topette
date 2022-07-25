@@ -23,5 +23,7 @@ const crearTarea = (tarea) => {
     let responsableTarea document.createElement('p')
     responsableTarea.classList.add('card-tarea__responsable')
     responsableTarea.innerText = `<p class="card-tarea__responsable">Responsable: ${tarea.persona}</p>`
+
+    
 }
 
