@@ -1,31 +1,33 @@
 let tituloTarea = document.getElementById("tituloTarea")
 let descripcionTarea = document.getElementById("descripcionTarea")
 let botonGuardar = document.getElementById("botonGuardar")
+let botonBorrar = document.getElementById("botonBorrar")
 let porHacer = document.getElementById("porHacer")
 let progreso = document.getElementById('progreso');
 let finalizada = document.getElementById('finalizada');
 let responsableTarea = document.getElementById("responsableTarea")
 let fechaTarea = document.getElementById("fechaTarea")
 
+
+// Creando tarea
+
 const createData = async(titulo, descripcion, responsable, fecha) => {	
 	try {		
 		const respuesta =await axios.post('https://trelloleo-f16c3-default-rtdb.firebaseio.com/tareas.json', { Titulo: `${titulo}`, Descripcion:`${descripcion}`, Responsable:`${responsable}`, Fecha:`${fecha}`, Estado: "porHacer" });        
         const datos = await respuesta.data
 		console.log("ID: " + datos.name)	
-
+    limpiar()
 	} catch(error){
 		console.log(error);
 	}
 }
-
-
 
 // llamado
 
 // Trae todos los datos
 const readData = async() => {	
 	try {		
-		const respuesta =await axios.get('https://trelloleo-f16c3-default-rtdb.firebaseio.com/tareas.json');
+		const respuesta = await axios.get('https://trelloleo-f16c3-default-rtdb.firebaseio.com/tareas.json');
 		console.log(respuesta.status) // Respuesta del servidor
                 const datos = await respuesta.data
                 console.log(datos)
@@ -39,6 +41,8 @@ const readData = async() => {
                 <p class="card-text text-black d-flex">${datos[x].Descripcion}</p>
                 <h6 class="card-text text-black d-flex">${datos[x].Responsable}</h6>
                 <p class="card-text text-black d-flex">${datos[x].Fecha}</p>
+                <button type="button" class="btn btn-outline-danger btn-sm" id="botonBorrar" onclick="eliminar('${x}')">Borrar</button>
+                <button type="button" class="btn btn-outline-warning btn-sm" id="botonEditar">Editar</button>
                 </div>
                 </div>`
                   } 
@@ -50,6 +54,8 @@ const readData = async() => {
                 <p class="card-text text-black d-flex">${datos[x].Descripcion}</p>
                 <h6 class="card-text text-black d-flex">${datos[x].Responsable}</h6>
                 <p class="card-text text-black d-flex">${datos[x].Fecha}</p>
+                <button type="button" class="btn btn-outline-danger btn-sm" id="botonBorrar" onclick="eliminar('${x}')">Borrar</button>
+                <button type="button" class="btn btn-outline-warning btn-sm" id="botonEditar">Editar</button>
                 </div>
                 </div>`
                   }
@@ -62,6 +68,8 @@ const readData = async() => {
                 <p class="card-text text-black d-flex">${datos[x].Descripcion}</p>
                 <h6 class="card-text text-black d-flex">${datos[x].Responsable}</h6>
                 <p class="card-text text-black d-flex">${datos[x].Fecha}</p>
+                <button type="button" class="btn btn-outline-danger btn-sm" id="botonBorrar" onclick="eliminar('${x}')">Borrar</button>
+                <button type="button" class="btn btn-outline-warning btn-sm" id="botonEditar">Editar</button>
                 </div>
                 </div>`
                   }
@@ -74,7 +82,7 @@ const readData = async() => {
 
 }
 
-readData()
+
 
 // boton guardar datos y crear tarea
 
@@ -84,15 +92,15 @@ botonGuardar.addEventListener("click", ( ) => {
   const responsable = responsableTarea.value
   const fecha = fechaTarea.value
   createData(titulo, descripcion, responsable, fecha)
-  porHacer.innerHTML = "";
-  readData();
 } )
+
+
+readData()
 
 // update axios
 
 const updateData = async(id, posicion) => {
   try {	 
-        
   		const respuesta = await axios.patch(`https://trelloleo-f16c3-default-rtdb.firebaseio.com/tareas/${id}.json`, { Estado: posicion});      
       const datos = await respuesta.data
 		  console.log(datos)	
@@ -103,10 +111,29 @@ catch(error){
 }
 
 
+// borrar datos
+// Delete con Axios
+const eliminar = async(id) => {	
+	try {		
+		const respuesta = await axios.delete(`https://trelloleo-f16c3-default-rtdb.firebaseio.com/tareas/${id}.json`);        
+        const datos = await respuesta
+		    console.log(datos)	
+	} catch(error){
+		console.log(error);
+	}
+  limpiar()
+}
+
+const limpiar = ()=>{
+  porHacer.innerHTML = "";
+  progreso.innerHTML = "";
+  finalizada.innerHTML = "";
+  readData()
+}
+
+
 
 //sortable
-
-
 
 new Sortable(porHacer, {
   group: 'tareas',
@@ -147,4 +174,6 @@ new Sortable(finalizada, {
     updateData(evento.item.id, evento.to.id)
   }
 });
+
+
 
