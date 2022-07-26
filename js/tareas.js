@@ -2,12 +2,14 @@ let tituloTarea = document.getElementById("tituloTarea")
 let descripcionTarea = document.getElementById("descripcionTarea")
 let botonGuardar = document.getElementById("botonGuardar")
 let porHacer = document.getElementById("porHacer")
+let progreso = document.getElementById('progreso');
+let finalizada = document.getElementById('finalizada');
 let responsableTarea = document.getElementById("responsableTarea")
 let fechaTarea = document.getElementById("fechaTarea")
 
 const createData = async(titulo, descripcion, responsable, fecha) => {	
 	try {		
-		const respuesta =await axios.post('https://trelloleo-f16c3-default-rtdb.firebaseio.com/tareas.json', { Titulo: `${titulo}`, Descripcion:`${descripcion}`, Responsable:`${responsable}`, Fecha:`${fecha}`, Estado: "hacer" });        
+		const respuesta =await axios.post('https://trelloleo-f16c3-default-rtdb.firebaseio.com/tareas.json', { Titulo: `${titulo}`, Descripcion:`${descripcion}`, Responsable:`${responsable}`, Fecha:`${fecha}`, Estado: "porHacer" });        
         const datos = await respuesta.data
 		console.log("ID: " + datos.name)	
 
@@ -29,7 +31,7 @@ const readData = async() => {
                 console.log(datos)
                 for(let x in datos){   
                   
-                  if (datos[x].Estado == "hacer") {
+                  if (datos[x].Estado == "porHacer") {
                     porHacer.innerHTML += `
                 <div class="card m-2" id="${x}"> 
                 <div class="card-body">
@@ -42,6 +44,18 @@ const readData = async() => {
                   } 
                   if (datos[x].Estado == "progreso") {
                     progreso.innerHTML += `
+                <div class="card m-2" id="${x}"> 
+                <div class="card-body">
+                <h5 class="card-title text-black d-flex">${datos[x].Titulo}</h5>
+                <p class="card-text text-black d-flex">${datos[x].Descripcion}</p>
+                <h6 class="card-text text-black d-flex">${datos[x].Responsable}</h6>
+                <p class="card-text text-black d-flex">${datos[x].Fecha}</p>
+                </div>
+                </div>`
+                  }
+
+                  if (datos[x].Estado == "finalizada") {
+                    finalizada.innerHTML += `
                 <div class="card m-2" id="${x}"> 
                 <div class="card-body">
                 <h5 class="card-title text-black d-flex">${datos[x].Titulo}</h5>
@@ -77,14 +91,11 @@ botonGuardar.addEventListener("click", ( ) => {
 // update axios
 
 const updateData = async(id, posicion) => {
-  try {	
-    const objeto = {
-      {tareas: id}:
-      {Estado: posicion}
-    }
-  		const respuesta = await axios.patch('https://trelloleo-f16c3-default-rtdb.firebaseio.com/.json', note);      
-        const datos = await respuesta.data
-		console.log(datos)	
+  try {	 
+        
+  		const respuesta = await axios.patch(`https://trelloleo-f16c3-default-rtdb.firebaseio.com/tareas/${id}.json`, { Estado: posicion});      
+      const datos = await respuesta.data
+		  console.log(datos)	
 }
 catch(error){
   console.log(error);
@@ -95,8 +106,7 @@ catch(error){
 
 //sortable
 
-let progreso = document.getElementById('progreso');
-let finalizada = document.getElementById('finalizada');
+
 
 new Sortable(porHacer, {
   group: 'tareas',
