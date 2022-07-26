@@ -76,14 +76,19 @@ botonGuardar.addEventListener("click", ( ) => {
 
 // update axios
 
-const updateData = async(x, posicion) => {	
-	try {		
-		const respuesta =await axios.patch('https://trelloleo-f16c3-default-rtdb.firebaseio.com/tareas.json', {`{x}`: {Estado: posicion}});        
+const updateData = async(id, posicion) => {
+  try {	
+    const objeto = {
+      {tareas: id}:
+      {Estado: posicion}
+    }
+  		const respuesta = await axios.patch('https://trelloleo-f16c3-default-rtdb.firebaseio.com/.json', note);      
         const datos = await respuesta.data
 		console.log(datos)	
-	} catch(error){
-		console.log(error);
-	}
+}
+catch(error){
+  console.log(error);
+}
 }
 
 
@@ -132,3 +137,4 @@ new Sortable(finalizada, {
     updateData(evento.item.id, evento.to.id)
   }
 });
+

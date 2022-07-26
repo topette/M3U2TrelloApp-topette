@@ -28,34 +28,36 @@
     </div>
   </header>
 
-  
+  <div class="b-example-divider mt-5"></div>
+  <div class="container">
+    
+      <div class="row align-items-start">
+        
+        <div class="col-md-4">
+          <h2>Por hacer</h2>
+          <div class="col-md-12 min-vh-100 bg-secondary text-white card" id="porHacer">
+            
+        </div>
+        </div>
+        
+        <div class="col-md-4">
+          <h2>En progreso</h2>
+          <div class="col-md-12 min-vh-100 bg-secondary text-white card" id="progreso">
+            
+        </div>
+        </div>
+        
+        <div class="col-md-4">
+          <h2>Finalizadas</h2>
+          <div class="col-md-12 min-vh-100 bg-secondary text-white card" id="finalizada">
+            
+        </div>
+        </div>
+      </div>
+  </div>
+
   <div class="b-example-divider mt-5"></div>
 
-  <div class="container">
-
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-
-      <div class="col min-vh-100 bg-secondary text-white card" id="porHacer">
-            <h2>Por hacer</h2>
-            <div class="container-tasks" ></div>
-
-      </div>
-
-      <div class="col min-vh-100 bg-secondary text-white card" id="progreso">
-      
-            <h2>En Progreso</h2>
-        <div class="container-tasks" ></div>
-      </div>
-
-      <div class="col col min-vh-100 bg-secondary text-white card" id="finalizada">
-            <h2>Finalizadas</h2>
-
-        <div class="container-tasks" ></div>
-           
-      </div>
-     
-    </div>
-  </div>
   
   <!-- Modal -->
   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -108,11 +110,6 @@
     <!-- librerias internas 
     <script src="js/request.js"></script> -->
     <script src="js/tareas.js"></script>
-    <script type="text/javascript">
-      $(function () {
-          $('#datetimepicker1').datetimepicker();
-      });
-   </script>
 
 </body>
 </html>
