@@ -1,13 +1,16 @@
+// elementos del formulario
 let tituloTarea = document.getElementById("tituloTarea")
 let descripcionTarea = document.getElementById("descripcionTarea")
+let fechaTarea = document.getElementById("fechaTarea")
+let responsableTarea = document.getElementById("responsableTarea")
+// botones
 let botonGuardar = document.getElementById("botonGuardar")
 let botonBorrar = document.getElementById("botonBorrar")
+let botonEditar = document.getElementById("botonEditar")
+// posiciones
 let porHacer = document.getElementById("porHacer")
 let progreso = document.getElementById('progreso');
 let finalizada = document.getElementById('finalizada');
-let responsableTarea = document.getElementById("responsableTarea")
-let fechaTarea = document.getElementById("fechaTarea")
-
 
 // Creando tarea
 
@@ -42,7 +45,7 @@ const readData = async() => {
                 <h6 class="card-text text-black d-flex">${datos[x].Responsable}</h6>
                 <p class="card-text text-black d-flex">${datos[x].Fecha}</p>
                 <button type="button" class="btn btn-outline-danger btn-sm" id="botonBorrar" onclick="eliminar('${x}')">Borrar</button>
-                <button type="button" class="btn btn-outline-warning btn-sm" id="botonEditar">Editar</button>
+                <button type="button" class="btn btn-outline-warning btn-sm" id="botonEditar" onclick="editar('${x}')" data-bs-toggle="modal" data-bs-target="#exampleModal">Editar</button>
                 </div>
                 </div>`
                   } 
@@ -55,7 +58,7 @@ const readData = async() => {
                 <h6 class="card-text text-black d-flex">${datos[x].Responsable}</h6>
                 <p class="card-text text-black d-flex">${datos[x].Fecha}</p>
                 <button type="button" class="btn btn-outline-danger btn-sm" id="botonBorrar" onclick="eliminar('${x}')">Borrar</button>
-                <button type="button" class="btn btn-outline-warning btn-sm" id="botonEditar">Editar</button>
+                <button type="button" class="btn btn-outline-warning btn-sm" id="botonEditar" onclick="editar('${x}')" data-bs-toggle="modal" data-bs-target="#exampleModal">Editar</button>
                 </div>
                 </div>`
                   }
@@ -69,7 +72,7 @@ const readData = async() => {
                 <h6 class="card-text text-black d-flex">${datos[x].Responsable}</h6>
                 <p class="card-text text-black d-flex">${datos[x].Fecha}</p>
                 <button type="button" class="btn btn-outline-danger btn-sm" id="botonBorrar" onclick="eliminar('${x}')">Borrar</button>
-                <button type="button" class="btn btn-outline-warning btn-sm" id="botonEditar">Editar</button>
+                <button type="button" class="btn btn-outline-warning btn-sm" id="botonEditar" onclick="editar('${x}')" data-bs-toggle="modal" data-bs-target="#exampleModal" >Editar</button>
                 </div>
                 </div>`
                   }
@@ -79,10 +82,7 @@ const readData = async() => {
 	} catch(error){
 		console.log(error);
 	}
-
 }
-
-
 
 // boton guardar datos y crear tarea
 
@@ -95,10 +95,35 @@ botonGuardar.addEventListener("click", ( ) => {
 } )
 
 
+// Editar datos
+
+
+const editar = async(id, titulo, descripcion, responsable, fecha) =>{
+    document.getElementById("id").value = id
+    document.getElementById("titulo").value = titulo
+    document.getElementById("descripcion").value = descripcion
+    document.getElementById("responsable").value = responsable
+    document.getElementById("fecha").value = fecha
+    
+  try {
+      const editarData = await axios.patch(`https://trelloleo-f16c3-default-rtdb.firebaseio.com/tareas/${id}.json`); 
+      return editarData.update({
+      Titulo: `${titulo}`,
+      Descripcion:`${descripcion}`,
+      Responsable:`${responsable}`,
+      Fecha:`${fecha}`
+    })
+  }
+  catch(error){
+    console.log(error);
+  }
+}
+
+
+
 readData()
 
-// update axios
-
+// update posicion con axios
 const updateData = async(id, posicion) => {
   try {	 
   		const respuesta = await axios.patch(`https://trelloleo-f16c3-default-rtdb.firebaseio.com/tareas/${id}.json`, { Estado: posicion});      
@@ -108,7 +133,7 @@ const updateData = async(id, posicion) => {
 catch(error){
   console.log(error);
 }
-}
+}  
 
 
 // borrar datos
