@@ -11,152 +11,146 @@ let botonEditar = document.getElementById("botonEditar")
 let porHacer = document.getElementById("porHacer")
 let progreso = document.getElementById('progreso');
 let finalizada = document.getElementById('finalizada');
+// Editar
+let ocultoId = document.getElementById("ocultoId")
+let tituloTareaEditar = document.getElementById("tituloTareaEditar")
+let descripcionTareaEditar = document.getElementById("descripcionTareaEditar")
+let responsableTareaEditar = document.getElementById("responsableTareaEditar")
+let fechaTareaEditar = document.getElementById("fechaTareaEditar")
+
+// Llamando base
+
+const urlData = 'https://trelloleo-f16c3-default-rtdb.firebaseio.com/'
 
 // Creando tarea
 
-const createData = async(titulo, descripcion, responsable, fecha) => {	
-	try {		
-		const respuesta =await axios.post('https://trelloleo-f16c3-default-rtdb.firebaseio.com/tareas.json', { Titulo: `${titulo}`, Descripcion:`${descripcion}`, Responsable:`${responsable}`, Fecha:`${fecha}`, Estado: "porHacer" });        
-        const datos = await respuesta.data
-		console.log("ID: " + datos.name)	
+const createData = async (titulo, descripcion, responsable, fecha) => {
+  try {
+    const respuesta = await axios.post(urlData + 'tareas.json', { Titulo: `${titulo}`, Descripcion: `${descripcion}`, Responsable: `${responsable}`, Fecha: `${fecha}`, Estado: "porHacer" });
+    const datos = await respuesta.data
+    console.log("ID: " + datos.name)
     limpiar()
-	} catch(error){
-		console.log(error);
-	}
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 // llamado
 
 // Trae todos los datos
-const readData = async() => {	
-	try {		
-		const respuesta = await axios.get('https://trelloleo-f16c3-default-rtdb.firebaseio.com/tareas.json');
-		console.log(respuesta.status) // Respuesta del servidor
-                const datos = await respuesta.data
-                console.log(datos)
-                for(let x in datos){   
-                  
-                  if (datos[x].Estado == "porHacer") {
-                    porHacer.innerHTML += `
-                <div class="card m-2" id="${x}"> 
-                <div class="card-body">
-                <h5 class="card-title text-black d-flex">${datos[x].Titulo}</h5>
-                <p class="card-text text-black d-flex">${datos[x].Descripcion}</p>
-                <h6 class="card-text text-black d-flex">${datos[x].Responsable}</h6>
-                <p class="card-text text-black d-flex">${datos[x].Fecha}</p>
-                <button type="button" class="btn btn-outline-danger btn-sm" id="botonBorrar" onclick="eliminar('${x}')">Borrar</button>
-                <button type="button" class="btn btn-outline-warning btn-sm" id="botonEditar" onclick="editar('${x}')" data-bs-toggle="modal" data-bs-target="#exampleModal">Editar</button>
-                </div>
-                </div>`
-                  } 
-                  if (datos[x].Estado == "progreso") {
-                    progreso.innerHTML += `
-                <div class="card m-2" id="${x}"> 
-                <div class="card-body">
-                <h5 class="card-title text-black d-flex">${datos[x].Titulo}</h5>
-                <p class="card-text text-black d-flex">${datos[x].Descripcion}</p>
-                <h6 class="card-text text-black d-flex">${datos[x].Responsable}</h6>
-                <p class="card-text text-black d-flex">${datos[x].Fecha}</p>
-                <button type="button" class="btn btn-outline-danger btn-sm" id="botonBorrar" onclick="eliminar('${x}')">Borrar</button>
-                <button type="button" class="btn btn-outline-warning btn-sm" id="botonEditar" onclick="editar('${x}')" data-bs-toggle="modal" data-bs-target="#exampleModal">Editar</button>
-                </div>
-                </div>`
-                  }
+const readData = async () => {
+  try {
+    const respuesta = await axios.get(urlData + 'tareas.json');
+    console.log(respuesta.status) // Respuesta del servidor
+    const datos = await respuesta.data
+    console.log(datos)
+    for (let x in datos) {
+      const cardDatos = `
+                  <div class="card m-2" id="${x}"> 
+                  <div class="card-body">
+                  <h5 class="card-title text-black d-flex">${datos[x].Titulo}</h5>
+                  <p class="card-text text-black d-flex">${datos[x].Descripcion}</p>
+                  <h6 class="card-text text-black d-flex">${datos[x].Responsable}</h6>
+                  <p class="card-text text-black d-flex">${datos[x].Fecha}</p>
+                  <button type="button" class="btn btn-outline-danger btn-sm" id="botonBorrar" onclick="eliminar('${x}')">Borrar</button>
+                  <button type="button" class="btn btn-outline-warning btn-sm" onclick="readDataEditar('${x}')" data-bs-toggle="modal" data-bs-target="#exampleModal2">Editar</button>
+                  </div>
+                  </div>`
+      if (datos[x].Estado == "porHacer") {
+        porHacer.innerHTML += cardDatos
+      }
+      if (datos[x].Estado == "progreso") {
+        progreso.innerHTML += cardDatos
+      }
+      if (datos[x].Estado == "finalizada") {
+        finalizada.innerHTML += cardDatos
+      }
+      // Por si se envia por ejemplo a un elemento del DOM
+    }
 
-                  if (datos[x].Estado == "finalizada") {
-                    finalizada.innerHTML += `
-                <div class="card m-2" id="${x}"> 
-                <div class="card-body">
-                <h5 class="card-title text-black d-flex">${datos[x].Titulo}</h5>
-                <p class="card-text text-black d-flex">${datos[x].Descripcion}</p>
-                <h6 class="card-text text-black d-flex">${datos[x].Responsable}</h6>
-                <p class="card-text text-black d-flex">${datos[x].Fecha}</p>
-                <button type="button" class="btn btn-outline-danger btn-sm" id="botonBorrar" onclick="eliminar('${x}')">Borrar</button>
-                <button type="button" class="btn btn-outline-warning btn-sm" id="botonEditar" onclick="editar('${x}')" data-bs-toggle="modal" data-bs-target="#exampleModal" >Editar</button>
-                </div>
-                </div>`
-                  }
-                 // Por si se envia por ejemplo a un elemento del DOM
-                }
-
-	} catch(error){
-		console.log(error);
-	}
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 // boton guardar datos y crear tarea
 
-botonGuardar.addEventListener("click", ( ) => {
+botonGuardar.addEventListener("click", () => {
   const titulo = tituloTarea.value
   const descripcion = descripcionTarea.value
   const responsable = responsableTarea.value
   const fecha = fechaTarea.value
   createData(titulo, descripcion, responsable, fecha)
-} )
+})
 
+readData()
 
-// Editar datos
-
-
-const editar = async(id, titulo, descripcion, responsable, fecha) =>{
-    document.getElementById("id").value = id
-    document.getElementById("titulo").value = titulo
-    document.getElementById("descripcion").value = descripcion
-    document.getElementById("responsable").value = responsable
-    document.getElementById("fecha").value = fecha
-    
+// update posicion con axios
+const updateData = async (id, posicion) => {
   try {
-      const editarData = await axios.patch(`https://trelloleo-f16c3-default-rtdb.firebaseio.com/tareas/${id}.json`); 
-      return editarData.update({
-      Titulo: `${titulo}`,
-      Descripcion:`${descripcion}`,
-      Responsable:`${responsable}`,
-      Fecha:`${fecha}`
-    })
+    await axios.patch(urlData + `tareas/${id}.json`, { Estado: posicion })
   }
-  catch(error){
+  catch (error) {
     console.log(error);
   }
 }
 
 
-
-readData()
-
-// update posicion con axios
-const updateData = async(id, posicion) => {
-  try {	 
-  		const respuesta = await axios.patch(`https://trelloleo-f16c3-default-rtdb.firebaseio.com/tareas/${id}.json`, { Estado: posicion});      
-      const datos = await respuesta.data
-		  console.log(datos)	
-}
-catch(error){
-  console.log(error);
-}
-}  
-
-
 // borrar datos
 // Delete con Axios
-const eliminar = async(id) => {	
-	try {		
-		const respuesta = await axios.delete(`https://trelloleo-f16c3-default-rtdb.firebaseio.com/tareas/${id}.json`);        
-        const datos = await respuesta
-		    console.log(datos)	
-	} catch(error){
-		console.log(error);
-	}
+const eliminar = async (id) => {
+  try {
+    await axios.delete(urlData + `tareas/${id}.json`);
+
+  } catch (error) {
+    console.log(error);
+  }
   limpiar()
 }
 
-const limpiar = ()=>{
+const limpiar = () => {
   porHacer.innerHTML = "";
   progreso.innerHTML = "";
   finalizada.innerHTML = "";
   readData()
 }
 
+// Editar datos
 
+const guardarEditar = async () => {
+  try {
+    await axios.patch(urlData + `tareas/${ocultoId.value}.json`, {
+
+      Titulo: `${tituloTareaEditar.value}`,
+      Descripcion: `${descripcionTareaEditar.value}`,
+      Responsable: `${responsableTareaEditar.value}`,
+      Fecha: `${fechaTareaEditar.value}`
+    })
+
+    limpiar()
+
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+const readDataEditar = async (id) => {
+  try {
+    const respuesta = await axios.get(urlData + `tareas/${id}.json`);
+    console.log(respuesta.status) // Respuesta del servidor
+    const datos = await respuesta.data
+    console.log(datos)
+
+    ocultoId.value = id
+    tituloTareaEditar.value = datos.Titulo
+    descripcionTareaEditar.value = datos.Descripcion
+    responsableTareaEditar.value = datos.Responsable
+    fechaTareaEditar.value = datos.Fecha
+  } catch (error) {
+    console.log(error);
+  }
+
+}
 
 //sortable
 
@@ -192,7 +186,7 @@ new Sortable(finalizada, {
   animation: 150,
   onStart: (evento) => {
     console.log("Id: " + evento.item.id)
-    console.log("Desde: " + evento.from.id)  
+    console.log("Desde: " + evento.from.id)
   },
   onEnd: (evento) => {
     console.log("Hacia: " + evento.to.id)
@@ -200,5 +194,10 @@ new Sortable(finalizada, {
   }
 });
 
+// Validaciones
 
+$('#exampleModal').on('hidden.bs.modal', function () {
 
+  //Reversas la validación
+
+});
