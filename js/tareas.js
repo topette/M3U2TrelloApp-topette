@@ -65,9 +65,7 @@ const readData = async () => {
       if (datos[x].Estado == "finalizada") {
         finalizada.innerHTML += cardDatos
       }
-      // Por si se envia por ejemplo a un elemento del DOM
     }
-
   } catch (error) {
     console.log(error);
   }
@@ -76,6 +74,27 @@ const readData = async () => {
 // boton guardar datos y crear tarea
 
 botonGuardar.addEventListener("click", () => {
+
+  (function () {
+    'use strict'
+  
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    var forms = document.querySelectorAll('.needs-validation')
+  
+    // Loop over them and prevent submission
+    Array.prototype.slice.call(forms)
+      .forEach(function (form) {
+        form.addEventListener('submit', function (event) {
+          if (!form.checkValidity()) {
+            event.preventDefault()
+            event.stopPropagation()
+          }
+  
+          form.classList.add('was-validated')
+        }, false)
+      })
+  })()
+
   const titulo = tituloTarea.value
   const descripcion = descripcionTarea.value
   const responsable = responsableTarea.value
@@ -94,7 +113,6 @@ const updateData = async (id, posicion) => {
     console.log(error);
   }
 }
-
 
 // borrar datos
 // Delete con Axios
@@ -120,11 +138,10 @@ const limpiar = () => {
 const guardarEditar = async () => {
   try {
     await axios.patch(urlData + `tareas/${ocultoId.value}.json`, {
-
       Titulo: `${tituloTareaEditar.value}`,
       Descripcion: `${descripcionTareaEditar.value}`,
       Responsable: `${responsableTareaEditar.value}`,
-      Fecha: `${fechaTareaEditar.value}`
+      Fecha: `${fechaTareaEditar.value}`,
     })
 
     limpiar()
@@ -136,7 +153,7 @@ const guardarEditar = async () => {
 
 const readDataEditar = async (id) => {
   try {
-    const respuesta = await axios.get(urlData + `tareas/${id}.json`);
+    const respuesta = await axios.get(urlData+`tareas/${id}.json`);
     console.log(respuesta.status) // Respuesta del servidor
     const datos = await respuesta.data
     console.log(datos)
@@ -196,8 +213,3 @@ new Sortable(finalizada, {
 
 // Validaciones
 
-$('#exampleModal').on('hidden.bs.modal', function () {
-
-  //Reversas la validación
-
-});

@@ -9,7 +9,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.0/font/bootstrap-icons.css">
-</head>
+
+  </head>
 
   <header class="p-3 bg-light text-white">
     <div class="container">
@@ -43,7 +44,7 @@
         <div class="col-md-4">
           <h2>En progreso</h2>
           <div class="col-md-12 min-vh-100 bg-secondary text-white card" id="progreso">
-            
+
         </div>
         </div>
         
@@ -58,8 +59,7 @@
 
   <div class="b-example-divider mt-5"></div>
 
-  
-  <!-- Modal -->
+  <!-- Modal nueva Tarea-->
 
   <div class="modal fade " id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -69,7 +69,7 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-            <form class="form-new-task needs-validation" novalidate>  
+            <form id="newModalForm needs-validation">  
               <div class="mb-3">
                   <label for="titleTask" class="form-label">Título</label>
                   
@@ -89,22 +89,21 @@
                 </div>
 
                 <div class="row-form">
-                    <label for="deadlineTask" class="form-new-task__label">Plazo Entrega:</label>
-                    <input type="date" id="fechaTarea" name="trip-start">
+                    <label>Plazo Entrega:</label>
+                    <input type="date" id="fechaTarea" name="trip-start" required>
 
                 </div> 
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-          <button type="submit" class="btn btn-primary" id="botonGuardar" data-bs-dismiss="modal">Guardar</button>
+          <button type="submit" class="btn btn-primary" id="botonGuardar" >Guardar</button>
         </div>
       </form>
       </div>
     </div>
   </div>
 
-
-  <!-- Modal -->
+  <!-- Modal editar tarea -->
   <div class="modal fade needs-validation" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -113,19 +112,19 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-            <form>
+            <form id="newModalForm needs-validation">
               <div class="mb-3">
                   <label for="titleTask" class="form-label">Título</label>
                   
-                  <input type="text" id="tituloTareaEditar" name="" class="form-control" placeholder="Escriba el título de la nueva tarea">
+                  <input type="text" id="tituloTareaEditar" name="" class="form-control" placeholder="Escriba el título de la nueva tarea" required>
                 
                 </div>
                   <div class="mb-3"><label for="exampleFormControlTextarea1" class="form-label">descripción</label>
-                  <textarea class="form-control" id="descripcionTareaEditar" rows="3" placeholder="Escriba la descripción de la nueva tarea"></textarea>
+                  <textarea class="form-control" id="descripcionTareaEditar" rows="3" placeholder="Escriba la descripción de la nueva tarea" required></textarea>
                 </div>
                   <div class="row-form">
                     <label>Responsable:</label>
-                    <select name="" id="responsableTareaEditar" class="form-select">
+                    <select name="" id="responsableTareaEditar" class="form-select" required>
                         <option value="">Seleccionar</option>
                         <option value="Leonardo">Leonardo</option>
                         <option value="María">María</option>
@@ -133,14 +132,13 @@
                 </div>
 
                 <div class="row-form">
-                    <label for="deadlineTask" class="form-new-task__label">Plazo Entrega:</label>
-                    <input type="date" id="fechaTareaEditar" name="trip-start">
-
+                    <label>Plazo Entrega:</label>
+                    <input type="date" id="fechaTareaEditar" name="trip-start" required>
                 </div> 
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-          <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" onclick="guardarEditar()">Editar y Guardar</button>
+          <button type="submit" class="btn btn-primary" onclick="guardarEditar()">Editar y Guardar</button>
           <input type="hidden" id="ocultoId">
         </div>
       </form>
@@ -149,15 +147,14 @@
   </div>
 
     <!-- librerias externas-->
-    <!-- Latest Sortable -->
     <script src="http://SortableJS.github.io/Sortable/Sortable.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-
-    <!-- librerias internas 
-    <script src="js/request.js"></script> -->
+   <!-- librerias internas -->
     <script src="js/tareas.js"></script>
-      <script>
-        (function () {
+
+    <script>
+      // Example starter JavaScript for disabling form submissions if there are invalid fields
+(function () {
   'use strict'
 
   // Fetch all the forms we want to apply custom Bootstrap validation styles to
@@ -176,6 +173,6 @@
       }, false)
     })
 })()
-      </script>
+    </script>
 </body>
 </html>
