@@ -60,8 +60,7 @@
   <div class="b-example-divider mt-5"></div>
 
   <!-- Modal nueva Tarea-->
-
-  <div class="modal fade " id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -69,11 +68,11 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-            <form id="newModalForm needs-validation">  
+            <form id="newModalForm" class="needs-validation">  
               <div class="mb-3">
                   <label for="titleTask" class="form-label">Título</label>
                   
-                  <input type="text" id="tituloTarea" name="" class="form-control" placeholder="Escriba el título de la nueva tarea" required>
+                  <input type="text" id="tituloTarea" class="form-control" placeholder="Escriba el título de la nueva tarea" required>
                   <div class="invalid-feedback">Por favor escriba un titulo</div>
                 </div>
                   <div class="mb-3"><label for="exampleFormControlTextarea1" class="form-label">descripción</label>
@@ -90,7 +89,7 @@
 
                 <div class="row-form">
                     <label>Plazo Entrega:</label>
-                    <input type="date" id="fechaTarea" name="trip-start" required>
+                    <input type="date" min="2022-05-01" id="fechaTarea" name="trip-start" required>
 
                 </div> 
         </div>
@@ -104,7 +103,7 @@
   </div>
 
   <!-- Modal editar tarea -->
-  <div class="modal fade needs-validation" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -112,19 +111,19 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-            <form id="newModalForm needs-validation">
+            <form id="newModalForm" class="needs-validation">
               <div class="mb-3">
                   <label for="titleTask" class="form-label">Título</label>
                   
-                  <input type="text" id="tituloTareaEditar" name="" class="form-control" placeholder="Escriba el título de la nueva tarea" required>
+                  <input type="text" id="tituloTareaEditar" name="" class="form-control" placeholder="Escriba el título de tarea" required>
                 
                 </div>
                   <div class="mb-3"><label for="exampleFormControlTextarea1" class="form-label">descripción</label>
-                  <textarea class="form-control" id="descripcionTareaEditar" rows="3" placeholder="Escriba la descripción de la nueva tarea" required></textarea>
+                  <textarea class="form-control" id="descripcionTareaEditar" rows="3" placeholder="Escriba la descripción de la tarea" required></textarea>
                 </div>
                   <div class="row-form">
                     <label>Responsable:</label>
-                    <select name="" id="responsableTareaEditar" class="form-select" required>
+                    <select id="responsableTareaEditar" class="form-select" required>
                         <option value="">Seleccionar</option>
                         <option value="Leonardo">Leonardo</option>
                         <option value="María">María</option>
@@ -170,28 +169,6 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
    <!-- librerias internas -->
     <script src="js/tareas.js"></script>
-
-    <script>
-      // Example starter JavaScript for disabling form submissions if there are invalid fields
-(function () {
-  'use strict'
-
-  // Fetch all the forms we want to apply custom Bootstrap validation styles to
-  var forms = document.querySelectorAll('.needs-validation')
-
-  // Loop over them and prevent submission
-  Array.prototype.slice.call(forms)
-    .forEach(function (form) {
-      form.addEventListener('submit', function (event) {
-        if (!form.checkValidity()) {
-          event.preventDefault()
-          event.stopPropagation()
-        }
-
-        form.classList.add('was-validated')
-      }, false)
-    })
-})()
-    </script>
+   
 </body>
 </html>

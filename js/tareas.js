@@ -69,28 +69,14 @@ const readData = async () => {
 
 // boton guardar datos y crear tarea
 botonGuardar.addEventListener("click", () => {
-  // Validacion de Bootstrap
-  (function () {
-    'use strict'
-    // Usando la clase needs-validation en el form
-    var forms = document.querySelectorAll('.needs-validation')
-    // Loop over them and prevent submission
-    Array.prototype.slice.call(forms)
-      .forEach(function (form) {
-        form.addEventListener('submit', function (event) {
-          if (!form.checkValidity()) {
-            event.preventDefault()
-            event.stopPropagation()
-          }
-          form.classList.add('was-validated')
-          const titulo = tituloTarea.value
-          const descripcion = descripcionTarea.value
-          const responsable = responsableTarea.value
-          const fecha = fechaTarea.value
-          createData(titulo, descripcion, responsable, fecha)
-        }, false)
-      })
-  })()
+      const titulo = tituloTarea.value
+      const descripcion = descripcionTarea.value
+      const responsable = responsableTarea.value
+      const fecha = fechaTarea.value
+      if(titulo.length == 0 || descripcion.length == 0 || responsable.selectedIndex == 0 || fecha.length == 0) {
+        return;
+      }
+      createData(titulo, descripcion, responsable, fecha)
 })
 
 // Leyendo datos
@@ -132,11 +118,9 @@ const guardarEditar = async () => {
       Responsable: `${responsableTareaEditar.value}`,
       Fecha: `${fechaTareaEditar.value}`,
     })
-
-    limpiar()
-
   } catch (error) {
     console.log(error);
+    limpiar()
   }
 }
 
@@ -152,7 +136,7 @@ const readDataEditar = async (id) => {
     descripcionTareaEditar.value = datos.Descripcion
     responsableTareaEditar.value = datos.Responsable
     fechaTareaEditar.value = datos.Fecha
-
+    
   } catch (error) {
     console.log(error);
   }
