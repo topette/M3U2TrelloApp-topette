@@ -152,7 +152,7 @@ const readDataEditar = async (id) => {
     descripcionTareaEditar.value = datos.Descripcion
     responsableTareaEditar.value = datos.Responsable
     fechaTareaEditar.value = datos.Fecha
-    
+
   } catch (error) {
     console.log(error);
   }
