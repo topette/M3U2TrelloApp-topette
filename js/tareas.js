@@ -85,7 +85,9 @@ readData()
 // update posicion con axios
 const updateData = async (id, posicion) => {
   try {
-    await axios.patch(urlData + `tareas/${id}.json`, { Estado: posicion })
+    const respuesta = await axios.patch(urlData + `tareas/${id}.json`, { Estado: posicion })
+    const datos = await respuesta.data
+    console.log(datos)
   }
   catch (error) {
     console.log(error);
@@ -95,7 +97,9 @@ const updateData = async (id, posicion) => {
 // Borrar con Axios
 const eliminar = async (id) => {
   try {
-    await axios.delete(urlData + `tareas/${id}.json`);
+    const respuesta = await axios.delete(urlData + `tareas/${id}.json`)
+    const datos = await respuesta
+		    console.log(datos)
   } catch (error) {
     console.log(error);
   }
@@ -112,12 +116,14 @@ const limpiar = () => {
 // Editar datos
 const guardarEditar = async () => {
   try {
-    await axios.patch(urlData + `tareas/${ocultoId.value}.json`, {
+    const respuesta = await axios.patch(urlData + `tareas/${ocultoId.value}.json`, {
       Titulo: `${tituloTareaEditar.value}`,
       Descripcion: `${descripcionTareaEditar.value}`,
       Responsable: `${responsableTareaEditar.value}`,
-      Fecha: `${fechaTareaEditar.value}`,
+      Fecha: `${fechaTareaEditar.value}`
     })
+    const datos = await respuesta
+		console.log(datos)
   } catch (error) {
     console.log(error);
     limpiar()
