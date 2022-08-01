@@ -73,9 +73,9 @@ botonGuardar.addEventListener("click", () => {
       const descripcion = descripcionTarea.value
       const responsable = responsableTarea.value
       const fecha = fechaTarea.value
-      /*if(titulo.length == 0 || descripcion.length == 0 || responsable.selectedIndex == 0 || fecha.length == 0) {
+      if(titulo.length == 0 || descripcion.length == 0 || responsable.selectedIndex == 0 || fecha.length == 0) {
         return;
-      }*/
+      }
       createData(titulo, descripcion, responsable, fecha)
 })
 
